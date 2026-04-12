@@ -1,7 +1,7 @@
 ---
 layout: default
 title: FAQ
-description: Answers to common PolarPvP-Manager questions
+description: Answers to common SSoggyPvP-Manager questions
 ---
 
 ## Does this plugin work on Paper?

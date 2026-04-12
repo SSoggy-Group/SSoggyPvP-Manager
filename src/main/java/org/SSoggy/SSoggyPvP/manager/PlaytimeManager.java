@@ -1,13 +1,13 @@
-package org.PolarNL.PolarPvP.manager;
+package org.SSoggy.SSoggyPvP.manager;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-import org.PolarNL.PolarPvP.PvPTogglePlugin;
-import org.PolarNL.PolarPvP.model.PlayerData;
-import org.PolarNL.PolarPvP.util.MessageUtil;
+import org.SSoggy.SSoggyPvP.PvPTogglePlugin;
+import org.SSoggy.SSoggyPvP.model.PlayerData;
+import org.SSoggy.SSoggyPvP.util.MessageUtil;
 
 import java.util.UUID;
 import java.util.logging.Level;

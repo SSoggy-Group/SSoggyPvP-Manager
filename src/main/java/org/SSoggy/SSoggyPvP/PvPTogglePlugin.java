@@ -1,19 +1,19 @@
-package org.PolarNL.PolarPvP;
+package org.SSoggy.SSoggyPvP;
 
 import java.util.Objects;
 import java.util.logging.Level;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import org.PolarNL.PolarPvP.command.PvPAdminCommand;
-import org.PolarNL.PolarPvP.command.PvPCommand;
-import org.PolarNL.PolarPvP.listener.CombatListener;
-import org.PolarNL.PolarPvP.listener.PlayerListener;
-import org.PolarNL.PolarPvP.listener.ZoneListener;
-import org.PolarNL.PolarPvP.manager.PlaytimeManager;
-import org.PolarNL.PolarPvP.manager.PvPManager;
-import org.PolarNL.PolarPvP.manager.ZoneManager;
-import org.PolarNL.PolarPvP.util.UpdateChecker;
+import org.SSoggy.SSoggyPvP.command.PvPAdminCommand;
+import org.SSoggy.SSoggyPvP.command.PvPCommand;
+import org.SSoggy.SSoggyPvP.listener.CombatListener;
+import org.SSoggy.SSoggyPvP.listener.PlayerListener;
+import org.SSoggy.SSoggyPvP.listener.ZoneListener;
+import org.SSoggy.SSoggyPvP.manager.PlaytimeManager;
+import org.SSoggy.SSoggyPvP.manager.PvPManager;
+import org.SSoggy.SSoggyPvP.manager.ZoneManager;
+import org.SSoggy.SSoggyPvP.util.UpdateChecker;
 
 public class PvPTogglePlugin extends JavaPlugin {
 
@@ -34,7 +34,7 @@ public class PvPTogglePlugin extends JavaPlugin {
         getServer().getConsoleSender().sendMessage("§b| |_) / _ \\| |/ _` | '__| |_) \\ \\ / / |_) |");
         getServer().getConsoleSender().sendMessage("§b|  __/ (_) | | (_| | |  |  __/ \\ V /|  __/");
         getServer().getConsoleSender().sendMessage("§b|_|   \\___/|_|\\__,_|_|  |_|     \\_/ |_|");
-        getServer().getConsoleSender().sendMessage("§7  PolarPvP-Manager §fv" + version + " §7| §aBukkit/Spigot/Paper/Purpur");
+        getServer().getConsoleSender().sendMessage("§7  SSoggyPvP-Manager §fv" + version + " §7| §aBukkit/Spigot/Paper/Purpur");
         getServer().getConsoleSender().sendMessage("");
 
         saveDefaultConfig();
@@ -67,7 +67,7 @@ public class PvPTogglePlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(updateChecker, this);
         updateChecker.check();
 
-        getLogger().log(Level.INFO, "PolarPvP-Manager v{0} enabled!", getDescription().getVersion());
+        getLogger().log(Level.INFO, "SSoggyPvP-Manager v{0} enabled!", getDescription().getVersion());
     }
 
     @Override

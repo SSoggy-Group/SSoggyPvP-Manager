@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.listener;
+package org.SSoggy.SSoggyPvP.listener;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -9,8 +9,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-import org.PolarNL.PolarPvP.PvPTogglePlugin;
-import org.PolarNL.PolarPvP.util.MessageUtil;
+import org.SSoggy.SSoggyPvP.PvPTogglePlugin;
+import org.SSoggy.SSoggyPvP.util.MessageUtil;
 
 public class CombatListener implements Listener {
 

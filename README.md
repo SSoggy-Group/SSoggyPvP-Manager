@@ -1,4 +1,4 @@
-# PolarPvP-Manager
+# SSoggyPvP-Manager
 
 A comprehensive Minecraft PvP management plugin that provides players with control over their PvP status while giving administrators powerful tools to enforce PvP in specific zones and through playtime-based mechanics.
 
@@ -22,7 +22,7 @@ A comprehensive Minecraft PvP management plugin that provides players with contr
 1. Download the latest release JAR file
 2. Place the JAR file in your server's `plugins/` directory
 3. Start or restart your server
-4. Configure the plugin by editing `plugins/PolarPvP-Manager/config.yml`
+4. Configure the plugin by editing `plugins/SSoggyPvP-Manager/config.yml`
 5. Use `/pvpadmin reload` to apply configuration changes without restarting
 
 ## Commands
@@ -101,7 +101,7 @@ playtime:
 
 ## Configuration
 
-The plugin configuration is located at `plugins/PolarPvP-Manager/config.yml`.
+The plugin configuration is located at `plugins/SSoggyPvP-Manager/config.yml`.
 
 ### Key Settings
 
@@ -148,7 +148,7 @@ Build the plugin:
 mvn clean package
 ```
 
-The compiled JAR will be located in the `target/` directory, typically named `PolarPvP-Manager-<version>.jar`.
+The compiled JAR will be located in the `target/` directory, typically named `SSoggyPvP-Manager-<version>.jar`.
 
 ## Troubleshooting
 

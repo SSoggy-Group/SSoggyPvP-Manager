@@ -1,10 +1,10 @@
 ---
 layout: default
 title: Quick Start Guide
-description: Get PolarPvP-Manager running with the minimum required setup
+description: Get SSoggyPvP-Manager running with the minimum required setup
 ---
 
-This is the shortest path to a working PolarPvP-Manager installation.
+This is the shortest path to a working SSoggyPvP-Manager installation.
 
 ## Before You Start
 
@@ -22,9 +22,9 @@ Place the built jar in your server's `plugins/` directory and start the server o
 
 After first startup, the plugin creates:
 
-- `plugins/PolarPvP-Manager/config.yml`
-- `plugins/PolarPvP-Manager/playerdata.yml`
-- `plugins/PolarPvP-Manager/zones.yml`
+- `plugins/SSoggyPvP-Manager/config.yml`
+- `plugins/SSoggyPvP-Manager/playerdata.yml`
+- `plugins/SSoggyPvP-Manager/zones.yml`
 
 ### Step 3: Review Core Settings
 

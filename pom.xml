@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.PolarNL.PolarPvP</groupId>
-    <artifactId>PolarPvP-Manager</artifactId>
+    <groupId>org.SSoggy.SSoggyPvP</groupId>
+    <artifactId>SSoggyPvP-Manager</artifactId>
     <version>2.2.0</version>
     <packaging>jar</packaging>
 
-    <name>PolarPvP-Manager</name>
+    <name>SSoggyPvP-Manager</name>
     <description>PvP toggle with forced zones and playtime-based forced PvP</description>
 
     <properties>

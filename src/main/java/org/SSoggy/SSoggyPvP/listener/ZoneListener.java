@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.listener;
+package org.SSoggy.SSoggyPvP.listener;
 
 import java.util.Map;
 import java.util.UUID;
@@ -21,9 +21,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import org.PolarNL.PolarPvP.PvPTogglePlugin;
-import org.PolarNL.PolarPvP.util.ConfigUtil;
-import org.PolarNL.PolarPvP.util.MessageUtil;
+import org.SSoggy.SSoggyPvP.PvPTogglePlugin;
+import org.SSoggy.SSoggyPvP.util.ConfigUtil;
+import org.SSoggy.SSoggyPvP.util.MessageUtil;
 
 public class ZoneListener implements Listener {
 

@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.command;
+package org.SSoggy.SSoggyPvP.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,12 +17,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import org.PolarNL.PolarPvP.PvPTogglePlugin;
-import org.PolarNL.PolarPvP.model.PlayerData;
-import org.PolarNL.PolarPvP.model.PvPZone;
-import org.PolarNL.PolarPvP.util.CommandUtil;
-import org.PolarNL.PolarPvP.util.ConfigUtil;
-import org.PolarNL.PolarPvP.util.MessageUtil;
+import org.SSoggy.SSoggyPvP.PvPTogglePlugin;
+import org.SSoggy.SSoggyPvP.model.PlayerData;
+import org.SSoggy.SSoggyPvP.model.PvPZone;
+import org.SSoggy.SSoggyPvP.util.CommandUtil;
+import org.SSoggy.SSoggyPvP.util.ConfigUtil;
+import org.SSoggy.SSoggyPvP.util.MessageUtil;
 
 // /pvpadmin wand | zone create/delete/list/info | player <name> info/reset/setdebt | reload
 public class PvPAdminCommand implements TabExecutor {

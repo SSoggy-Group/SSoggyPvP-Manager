@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Troubleshooting
-description: Diagnose common PolarPvP-Manager setup and behavior issues
+description: Diagnose common SSoggyPvP-Manager setup and behavior issues
 ---
 
 ## Plugin Does Not Load

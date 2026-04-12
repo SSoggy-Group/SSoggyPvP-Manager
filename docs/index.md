@@ -1,10 +1,10 @@
 ---
 layout: default
-title: PolarPvP-Manager Documentation
+title: SSoggyPvP-Manager Documentation
 description: PvP toggle plugin with forced zones and playtime-based PvP enforcement
 ---
 
-PolarPvP-Manager gives players direct control over their PvP status while giving administrators tools to force PvP in specific regions and during configured playtime debt windows.
+SSoggyPvP-Manager gives players direct control over their PvP status while giving administrators tools to force PvP in specific regions and during configured playtime debt windows.
 
 ## Overview
 
@@ -34,7 +34,7 @@ PolarPvP-Manager gives players direct control over their PvP status while giving
 ## Quick Start Summary
 
 1. Drop the jar into `plugins/` and start the server.
-2. Adjust `plugins/PolarPvP-Manager/config.yml`.
+2. Adjust `plugins/SSoggyPvP-Manager/config.yml`.
 3. Give admins access to `pvptoggle.admin`.
 4. Create a zone with `/pvpadmin wand` and `/pvpadmin zone create <name>`.
 5. Test forced PvP with `/pvp status` and `/pvpadmin simtime <seconds>`.

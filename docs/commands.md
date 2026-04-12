@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Commands Reference
-description: Complete list of player and admin commands for PolarPvP-Manager
+description: Complete list of player and admin commands for SSoggyPvP-Manager
 ---
 
 ## Player Commands

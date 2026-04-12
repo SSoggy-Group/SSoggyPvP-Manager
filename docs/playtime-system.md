@@ -4,7 +4,7 @@ title: Playtime System
 description: Understand how playtime debt forces PvP after configured playtime cycles
 ---
 
-PolarPvP-Manager can force players into PvP after they accumulate a configured amount of playtime.
+SSoggyPvP-Manager can force players into PvP after they accumulate a configured amount of playtime.
 
 ## Configuration
 
