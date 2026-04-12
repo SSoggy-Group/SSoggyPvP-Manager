@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.util;
+package org.SSoggy.SSoggyPvP.util;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

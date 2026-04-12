@@ -1,10 +1,10 @@
-# PolarPvP-Manager
+# SSoggyPvP-Manager
 
 A powerful and flexible PvP management plugin for Minecraft servers.
 
 ## Overview
 
-PolarPvP-Manager gives your players complete control over their PvP experience while providing server administrators with advanced tools to manage PvP enforcement. Perfect for survival servers, minigame networks, and anywhere you need fine-grained PvP control.
+SSoggyPvP-Manager gives your players complete control over their PvP experience while providing server administrators with advanced tools to manage PvP enforcement. Perfect for survival servers, minigame networks, and anywhere you need fine-grained PvP control.
 
 ## Key Features
 

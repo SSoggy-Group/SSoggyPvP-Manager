@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.model;
+package org.SSoggy.SSoggyPvP.model;
 
 public class PlayerData {
 

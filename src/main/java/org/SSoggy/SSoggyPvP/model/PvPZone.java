@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.model;
+package org.SSoggy.SSoggyPvP.model;
 
 import org.bukkit.Location;
 import org.bukkit.World;

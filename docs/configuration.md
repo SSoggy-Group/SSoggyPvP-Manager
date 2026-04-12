@@ -4,7 +4,7 @@ title: Configuration Reference
 description: Configure default PvP state, messages, zone tools, and playtime debt
 ---
 
-The main configuration file lives at `plugins/PolarPvP-Manager/config.yml`.
+The main configuration file lives at `plugins/SSoggyPvP-Manager/config.yml`.
 
 ## Overview
 

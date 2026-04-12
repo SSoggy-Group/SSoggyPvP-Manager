@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.util;
+package org.SSoggy.SSoggyPvP.util;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

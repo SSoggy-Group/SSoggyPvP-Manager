@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.manager;
+package org.SSoggy.SSoggyPvP.manager;
 
 import java.util.Collections;
 import java.util.Map;
@@ -10,10 +10,10 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import org.PolarNL.PolarPvP.PvPTogglePlugin;
-import org.PolarNL.PolarPvP.model.PlayerData;
-import org.PolarNL.PolarPvP.util.DebugUtil;
-import org.PolarNL.PolarPvP.util.YamlUtil;
+import org.SSoggy.SSoggyPvP.PvPTogglePlugin;
+import org.SSoggy.SSoggyPvP.model.PlayerData;
+import org.SSoggy.SSoggyPvP.util.DebugUtil;
+import org.SSoggy.SSoggyPvP.util.YamlUtil;
 
 public class PvPManager {
 

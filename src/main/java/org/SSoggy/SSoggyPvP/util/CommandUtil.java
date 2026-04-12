@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.util;
+package org.SSoggy.SSoggyPvP.util;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.util;
+package org.SSoggy.SSoggyPvP.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,12 +12,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import org.PolarNL.PolarPvP.PvPTogglePlugin;
+import org.SSoggy.SSoggyPvP.PvPTogglePlugin;
 
 public class UpdateChecker implements Listener {
 
     private static final String GITHUB_API =
-            "https://api.github.com/repos/PolarMC-Technologies/PolarPvP-Manager/releases/latest";
+            "https://api.github.com/repos/SSoggy-Group/SSoggyPvP-Manager/releases/latest";
 
     private final PvPTogglePlugin plugin;
     private volatile String latestVersion = null;
@@ -57,7 +57,7 @@ public class UpdateChecker implements Listener {
                     latestVersion = remote;
                     plugin.getLogger().log(Level.WARNING, "A new version is available: v{0} (you''re on v{1})",
                             new Object[]{remote, current});
-                    plugin.getLogger().warning("Download: https://github.com/PolarMC-Technologies/PolarPvP-Manager/releases/latest");
+                    plugin.getLogger().warning("Download: https://github.com/SSoggy-Group/SSoggyPvP-Manager/releases/latest");
                 }
             } catch (java.io.IOException e) {
                 plugin.getLogger().log(Level.FINE, "Update check failed", e);
@@ -79,7 +79,7 @@ public class UpdateChecker implements Listener {
             if (player.isOnline()) {
                 String msg = plugin.getConfig().getString(
                         "messages.update-available",
-                        "&e&lPolarPvP &8» &7Update available: &av%latest% &7(you're on &cv%current%&7)");
+                        "&e&lSSoggyPvP &8» &7Update available: &av%latest% &7(you're on &cv%current%&7)");
                 msg = msg.replace("%latest%", latestVersion)
                          .replace("%current%", plugin.getDescription().getVersion());
                 MessageUtil.send(player, msg);

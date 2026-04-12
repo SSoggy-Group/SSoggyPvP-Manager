@@ -1,4 +1,4 @@
-package org.PolarNL.PolarPvP.util;
+package org.SSoggy.SSoggyPvP.util;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;

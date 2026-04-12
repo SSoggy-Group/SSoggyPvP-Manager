@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Installation Guide
-description: Install PolarPvP-Manager on a Bukkit-compatible server
+description: Install SSoggyPvP-Manager on a Bukkit-compatible server
 ---
 
 This guide covers plugin installation, first startup, and basic validation.
@@ -23,11 +23,11 @@ Download the latest jar from [GitHub Releases]({{ site.github.repository_url }}/
 
 ```bash
 git clone {{ site.github.repository_url }}.git
-cd PolarPvP-Manager
+cd SSoggyPvP-Manager
 mvn clean package
 ```
 
-The jar will be produced in `target/`, typically as `PolarPvP-Manager-1.0.0.jar`.
+The jar will be produced in `target/`, typically as `SSoggyPvP-Manager-1.0.0.jar`.
 
 ## Install on Your Server
 
@@ -39,7 +39,7 @@ The jar will be produced in `target/`, typically as `PolarPvP-Manager-1.0.0.jar`
 
 ## Generated Files
 
-PolarPvP-Manager stores its data in the plugin directory:
+SSoggyPvP-Manager stores its data in the plugin directory:
 
 - `config.yml` for behavior and messages
 - `playerdata.yml` for player PvP state, playtime, and debt
