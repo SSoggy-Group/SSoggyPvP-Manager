@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,6 +24,7 @@ public class ZoneManager {
 
     private final PvPTogglePlugin plugin;
     private final Map<String, PvPZone> zones = new LinkedHashMap<>();      // key = lowercase name
+    private final CopyOnWriteArrayList<PvPZone> zoneList = new CopyOnWriteArrayList<>();
     private final Map<UUID, Location[]> selections = new HashMap<>();      // [0]=pos1, [1]=pos2
     
     // lru cache for zone lookups with automatic eviction
@@ -86,7 +88,11 @@ public class ZoneManager {
                 selection[0].getBlockX(), selection[0].getBlockY(), selection[0].getBlockZ(),
                 selection[1].getBlockX(), selection[1].getBlockY(), selection[1].getBlockZ()));
         synchronized (saveLock) {
-            zones.put(name.toLowerCase(), zone);
+            PvPZone old = zones.put(name.toLowerCase(), zone);
+            if (old != null) {
+                zoneList.remove(old);
+            }
+            zoneList.add(zone);
             clearZoneCache(); // clear cache when zones change
         }
         saveZonesAsync();
@@ -96,8 +102,10 @@ public class ZoneManager {
     public boolean deleteZone(String name) {
         boolean removed;
         synchronized (saveLock) {
-            removed = zones.remove(name.toLowerCase()) != null;
+            PvPZone removedZone = zones.remove(name.toLowerCase());
+            removed = removedZone != null;
             if (removed) {
+                zoneList.remove(removedZone);
                 clearZoneCache(); // clear cache when zones change
             }
         }
@@ -113,9 +121,7 @@ public class ZoneManager {
     }
 
     public Collection<PvPZone> getZones() {
-        synchronized (saveLock) {
-            return Collections.unmodifiableCollection(new java.util.ArrayList<>(zones.values()));
-        }
+        return Collections.unmodifiableCollection(zoneList);
     }
 
     public Set<String> getZoneNames() {
@@ -135,14 +141,9 @@ public class ZoneManager {
             return cached;
         }
         
-        // not in cache, check all zones with a snapshot to avoid CME
-        Collection<PvPZone> zoneSnapshot;
-        synchronized (saveLock) {
-            zoneSnapshot = new java.util.ArrayList<>(zones.values());
-        }
-        
+        // not in cache, check all zones (thread-safe using CopyOnWriteArrayList)
         boolean inZone = false;
-        for (PvPZone zone : zoneSnapshot) {
+        for (PvPZone zone : zoneList) {
             if (zone.contains(location)) {
                 inZone = true;
                 break;
@@ -178,6 +179,8 @@ public class ZoneManager {
                 ));
             }
             loadedCount = zones.size();
+            zoneList.clear();
+            zoneList.addAll(zones.values());
             clearZoneCache(); // clear cache when zones are reloaded
         }
         plugin.getLogger().log(Level.INFO, "Loaded {0} PvP zone(s).", loadedCount);
