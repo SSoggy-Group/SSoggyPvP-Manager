@@ -26,12 +26,11 @@ public final class YamlUtil {
     }
 
     public static ConfigurationSection loadSection(File dataFolder, String filename, String sectionKey) {
-        if (!isSafePath(dataFolder, filename)) {
+        File file = getSafeFile(dataFolder, filename);
+        if (file == null) {
             LOGGER.log(Level.WARNING, "Blocked potential path traversal attempt: {0}", filename);
             return null;
         }
-
-        File file = new File(dataFolder, filename);
         if (!file.exists()) {
             // file doesn't exist - expected on first run
             return null;
