@@ -86,9 +86,10 @@ public class PvPTogglePlugin extends JavaPlugin {
         reloadConfig();
         
         // reload cached config values in managers and listeners
+        if (pvpManager != null)      pvpManager.loadConfigValues();
         if (playtimeManager != null) playtimeManager.loadConfigValues();
-        if (zoneManager != null) zoneManager.loadZones();
-        if (combatListener != null) combatListener.loadConfig();
+        if (zoneManager != null)     zoneManager.loadZones();
+        if (combatListener != null)  combatListener.loadConfig();
         if (zoneListener != null)    zoneListener.loadConfig();
     }
 
