@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -23,6 +24,7 @@ public class ZoneManager {
 
     private final PvPTogglePlugin plugin;
     private final Map<String, PvPZone> zones = new LinkedHashMap<>();      // key = lowercase name
+    private volatile Collection<PvPZone> zoneList = List.of();
     private final Map<UUID, Location[]> selections = new HashMap<>();      // [0]=pos1, [1]=pos2
     
     private record LocationKey(UUID worldId, int x, int y, int z) {}
@@ -80,6 +82,7 @@ public class ZoneManager {
                 selection[1].getBlockX(), selection[1].getBlockY(), selection[1].getBlockZ()));
         synchronized (saveLock) {
             zones.put(name.toLowerCase(), zone);
+            zoneList = List.copyOf(zones.values());
             clearZoneCache(); // clear cache when zones change
         }
         saveZonesAsync();
@@ -91,6 +94,7 @@ public class ZoneManager {
         synchronized (saveLock) {
             removed = zones.remove(name.toLowerCase()) != null;
             if (removed) {
+                zoneList = List.copyOf(zones.values());
                 clearZoneCache(); // clear cache when zones change
             }
         }
@@ -106,9 +110,7 @@ public class ZoneManager {
     }
 
     public Collection<PvPZone> getZones() {
-        synchronized (saveLock) {
-            return Collections.unmodifiableCollection(new java.util.ArrayList<>(zones.values()));
-        }
+        return zoneList;
     }
 
     public Set<String> getZoneNames() {
@@ -128,14 +130,9 @@ public class ZoneManager {
             return cached;
         }
         
-        // not in cache, check all zones with a snapshot to avoid CME
-        Collection<PvPZone> zoneSnapshot;
-        synchronized (saveLock) {
-            zoneSnapshot = new java.util.ArrayList<>(zones.values());
-        }
-        
+        // not in cache, check all zones (thread-safe using volatile immutable list)
         boolean inZone = false;
-        for (PvPZone zone : zoneSnapshot) {
+        for (PvPZone zone : zoneList) {
             if (zone.contains(location)) {
                 inZone = true;
                 break;
@@ -171,6 +168,7 @@ public class ZoneManager {
                 ));
             }
             loadedCount = zones.size();
+            zoneList = List.copyOf(zones.values());
             clearZoneCache(); // clear cache when zones are reloaded
         }
         plugin.getLogger().log(Level.INFO, "Loaded {0} PvP zone(s).", loadedCount);
