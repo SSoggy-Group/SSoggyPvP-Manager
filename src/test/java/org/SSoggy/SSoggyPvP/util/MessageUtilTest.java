@@ -3,7 +3,7 @@ package org.SSoggy.SSoggyPvP.util;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MessageUtilTest {
+class MessageUtilTest {
 
     @Test
     public void testFormatTime_zeroAndNegativeSeconds() {
