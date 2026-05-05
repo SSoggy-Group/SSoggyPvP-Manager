@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class CommandUtilTest {
+class CommandUtilTest {
 
     @Test
     public void testRequirePlayer_WithPlayer() {
