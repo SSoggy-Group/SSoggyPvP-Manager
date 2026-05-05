@@ -2,6 +2,7 @@ package org.SSoggy.SSoggyPvP.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +15,22 @@ public final class YamlUtil {
 
     private YamlUtil() {}
 
+    private static boolean isSafePath(File dataFolder, String filename) {
+        try {
+            File file = new File(dataFolder, filename).getCanonicalFile();
+            File folder = dataFolder.getCanonicalFile();
+            return file.toPath().startsWith(folder.toPath());
+        } catch (IOException e) {
+            return false;
+        }
+    }
+
     public static ConfigurationSection loadSection(File dataFolder, String filename, String sectionKey) {
+        if (!isSafePath(dataFolder, filename)) {
+            LOGGER.log(Level.WARNING, "Blocked potential path traversal attempt: {0}", filename);
+            return null;
+        }
+
         File file = new File(dataFolder, filename);
         if (!file.exists()) {
             // file doesn't exist - expected on first run
@@ -38,6 +54,11 @@ public final class YamlUtil {
 
     public static void saveConfig(YamlConfiguration config, File dataFolder, String filename, 
                                    Logger logger, String errorMessage) {
+        if (!isSafePath(dataFolder, filename)) {
+            logger.log(Level.WARNING, "Blocked potential path traversal attempt while saving: {0}", filename);
+            return;
+        }
+
         try {
             config.save(new File(dataFolder, filename));
         } catch (IOException e) {
