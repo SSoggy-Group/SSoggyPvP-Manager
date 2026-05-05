@@ -29,10 +29,10 @@ You must select two corners in the same world first.
 
 ## How do I test the playtime system quickly?
 
-Use the simulation command:
+You can test forced PvP debt by manually setting a player's debt:
 
 ```bash
-/pvpadmin simtime 3600
+/pvpadmin player <name> setdebt 1200
 ```
 
 ## Where is player data stored?

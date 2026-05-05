@@ -37,7 +37,7 @@ SSoggyPvP-Manager gives players direct control over their PvP status while givin
 2. Adjust `plugins/SSoggyPvP-Manager/config.yml`.
 3. Give admins access to `pvptoggle.admin`.
 4. Create a zone with `/pvpadmin wand` and `/pvpadmin zone create <name>`.
-5. Test forced PvP with `/pvp status` and `/pvpadmin simtime <seconds>`.
+5. Test forced PvP with `/pvp status`.
 
 ## Key Features
 
