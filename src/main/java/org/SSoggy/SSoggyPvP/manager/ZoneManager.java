@@ -179,8 +179,7 @@ public class ZoneManager {
                 ));
             }
             loadedCount = zones.size();
-            zoneList.clear();
-            zoneList.addAll(zones.values());
+            zoneList = List.copyOf(zones.values());
             clearZoneCache(); // clear cache when zones are reloaded
         }
         plugin.getLogger().log(Level.INFO, "Loaded {0} PvP zone(s).", loadedCount);
