@@ -19,12 +19,18 @@ public class PvPManager {
 
     private final PvPTogglePlugin plugin;
     private final Map<UUID, PlayerData> playerDataMap = new ConcurrentHashMap<>();
-    
+    private boolean debugEnabled;
+
     // sync writes to the player data file
     private final Object saveLock = new Object();
 
     public PvPManager(PvPTogglePlugin plugin) {
         this.plugin = plugin;
+        loadConfigValues();
+    }
+
+    public void loadConfigValues() {
+        this.debugEnabled = plugin.getConfig().getBoolean("debug", false);
     }
 
     // grab or make player data
@@ -55,7 +61,7 @@ public class PvPManager {
         boolean inZone = plugin.getZoneManager().isInForcedPvPZone(player.getLocation());
         boolean hasDebt = data.getPvpDebtSeconds() > 0 && !player.hasPermission("pvptoggle.bypass");
 
-        DebugUtil.logDebug(plugin.getConfig(), plugin.getLogger(),
+        DebugUtil.logDebug(debugEnabled, plugin.getLogger(),
                 "PvP check for {0}: toggle={1}, inZone={2}, hasDebt={3}",
                 player.getName(), toggle, inZone, hasDebt);
 
