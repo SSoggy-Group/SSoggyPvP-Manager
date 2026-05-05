@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class PvPZoneTest {
+class PvPZoneTest {
 
     private PvPZone zone;
     private final String worldName = "test_world";
@@ -58,53 +58,47 @@ public class PvPZoneTest {
 
     @Test
     void testContainsInside() {
-        Location loc = mock(Location.class);
         World world = mock(World.class);
-        when(loc.getWorld()).thenReturn(world);
         when(world.getName()).thenReturn(worldName);
-        when(loc.getBlockX()).thenReturn(15);
-        when(loc.getBlockY()).thenReturn(80);
-        when(loc.getBlockZ()).thenReturn(15);
+        Location loc = new Location(world, 15, 80, 15);
 
         assertTrue(zone.contains(loc));
     }
 
     @Test
     void testContainsOnEdge() {
-        Location loc = mock(Location.class);
         World world = mock(World.class);
-        when(loc.getWorld()).thenReturn(world);
         when(world.getName()).thenReturn(worldName);
-        when(loc.getBlockX()).thenReturn(10);
-        when(loc.getBlockY()).thenReturn(64);
-        when(loc.getBlockZ()).thenReturn(10);
 
-        assertTrue(zone.contains(loc));
+        assertTrue(zone.contains(new Location(world, 10, 64, 10)), "Should be true: Min corner");
+        assertTrue(zone.contains(new Location(world, 20, 100, 20)), "Should be true: Max corner");
     }
 
     @Test
-    void testContainsOutsideX() {
-        Location loc = mock(Location.class);
+    void testContainsOutside() {
         World world = mock(World.class);
-        when(loc.getWorld()).thenReturn(world);
         when(world.getName()).thenReturn(worldName);
-        when(loc.getBlockX()).thenReturn(9);
-        when(loc.getBlockY()).thenReturn(80);
-        when(loc.getBlockZ()).thenReturn(15);
+
+        assertFalse(zone.contains(new Location(world, 9, 80, 15)), "Should be false: X below min");
+        assertFalse(zone.contains(new Location(world, 21, 80, 15)), "Should be false: X above max");
+        assertFalse(zone.contains(new Location(world, 15, 63, 15)), "Should be false: Y below min");
+        assertFalse(zone.contains(new Location(world, 15, 101, 15)), "Should be false: Y above max");
+        assertFalse(zone.contains(new Location(world, 15, 80, 9)), "Should be false: Z below min");
+        assertFalse(zone.contains(new Location(world, 15, 80, 21)), "Should be false: Z above max");
+    }
+
+    @Test
+    void testContainsWrongWorld() {
+        World world = mock(World.class);
+        when(world.getName()).thenReturn("other_world");
+        Location loc = new Location(world, 15, 80, 15);
 
         assertFalse(zone.contains(loc));
     }
 
     @Test
-    void testContainsWrongWorld() {
-        Location loc = mock(Location.class);
-        World world = mock(World.class);
-        when(loc.getWorld()).thenReturn(world);
-        when(world.getName()).thenReturn("other_world");
-        when(loc.getBlockX()).thenReturn(15);
-        when(loc.getBlockY()).thenReturn(80);
-        when(loc.getBlockZ()).thenReturn(15);
-
+    void testContainsNullWorld() {
+        Location loc = new Location(null, 15, 80, 15);
         assertFalse(zone.contains(loc));
     }
 
