@@ -24,7 +24,7 @@ public class ZoneManager {
 
     private final PvPTogglePlugin plugin;
     private final Map<String, PvPZone> zones = new LinkedHashMap<>();      // key = lowercase name
-    private final CopyOnWriteArrayList<PvPZone> zoneList = new CopyOnWriteArrayList<>();
+    private volatile List<PvPZone> zoneList = List.of();
     private final Map<UUID, Location[]> selections = new HashMap<>();      // [0]=pos1, [1]=pos2
     
     // lru cache for zone lookups with automatic eviction
