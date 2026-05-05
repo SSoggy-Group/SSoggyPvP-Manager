@@ -27,14 +27,12 @@ public class ZoneManager {
     private volatile Collection<PvPZone> zoneList = List.of();
     private final Map<UUID, Location[]> selections = new HashMap<>();      // [0]=pos1, [1]=pos2
     
-    private record LocationKey(UUID worldId, int x, int y, int z) {}
-
     // lru cache for zone lookups with automatic eviction
     // wrapped in synchronizedMap for thread-safety across all operations
-    private final Map<LocationKey, Boolean> zoneCache = Collections.synchronizedMap(
-        new LinkedHashMap<LocationKey, Boolean>(13334, 0.75f, true) {
+    private final Map<String, Boolean> zoneCache = Collections.synchronizedMap(
+        new LinkedHashMap<String, Boolean>(10000, 0.75f, true) {
             @Override
-            protected boolean removeEldestEntry(Map.Entry<LocationKey, Boolean> eldest) {
+            protected boolean removeEldestEntry(Map.Entry<String, Boolean> eldest) {
                 return size() > 10000; // lru eviction when cache exceeds 10k entries
             }
         }
@@ -50,13 +48,22 @@ public class ZoneManager {
         zoneCache.clear();
     }
     
-    private LocationKey getLocationCacheKey(Location loc) {
+    private String getLocationCacheKey(Location loc) {
         World world = loc.getWorld();
         if (world == null) {
-            // fallback for null worlds, use a null UUID
-            return new LocationKey(null, 0, 0, 0);
+            return "null:0:0:0"; // fallback for null worlds
         }
-        return new LocationKey(world.getUID(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        String worldName = world.getName();
+        // pre-allocate capacity: world name plus delimiters and coordinates (30 extra chars for colons and coords)
+        return new StringBuilder(worldName.length() + 30)
+            .append(worldName)
+            .append(':')
+            .append(loc.getBlockX())
+            .append(':')
+            .append(loc.getBlockY())
+            .append(':')
+            .append(loc.getBlockZ())
+            .toString();
     }
 
     // set wand selection
@@ -124,7 +131,7 @@ public class ZoneManager {
         if (location == null || location.getWorld() == null) return false;
         
         // check cache first
-        LocationKey cacheKey = getLocationCacheKey(location);
+        String cacheKey = getLocationCacheKey(location);
         Boolean cached = zoneCache.get(cacheKey);
         if (cached != null) {
             return cached;
