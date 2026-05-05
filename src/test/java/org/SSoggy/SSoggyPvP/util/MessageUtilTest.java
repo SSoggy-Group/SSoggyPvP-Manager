@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class MessageUtilTest {
 
     @Test
-    public void testFormatTime_zeroAndNegativeSeconds() {
+    void testFormatTime_zeroAndNegativeSeconds() {
         assertEquals("0s", MessageUtil.formatTime(0), "0 seconds should format to '0s'");
         assertEquals("0s", MessageUtil.formatTime(-5), "Negative seconds should format to '0s'");
         assertEquals("0s", MessageUtil.formatTime(-3600), "Negative hours should format to '0s'");
