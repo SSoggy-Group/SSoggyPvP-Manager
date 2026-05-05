@@ -24,7 +24,7 @@ class CommandUtilTest {
     }
 
     @Test
-    public void testRequirePlayer_WithNonPlayer() {
+    void testRequirePlayer_WithNonPlayer() {
         // Arrange
         CommandSender mockSender = mock(CommandSender.class);
         String errorMessage = "You must be a player!";
