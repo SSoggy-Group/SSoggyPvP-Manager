@@ -10,22 +10,26 @@ SSoggyPvP-Manager can force players into PvP after they accumulate a configured 
 
 ```yaml
 playtime:
+  minutes-per-cycle: 60
   hours-per-cycle: 1
+  forced-seconds: 1200
   forced-minutes: 20
+  solo-accumulate: true
+  solo-forced: false
 ```
 
 With the default values:
 
-- each 1 hour of playtime creates a cycle
-- each cycle adds 20 minutes of forced PvP debt
+- each 60 minutes of playtime creates a cycle
+- each cycle adds 1200 seconds (20 minutes) of forced PvP debt
 
 ## How It Works
 
-1. A player accumulates normal playtime while online.
-2. When their total playtime crosses a configured cycle threshold, the plugin records a processed cycle.
-3. The player gains forced PvP debt for that cycle.
+1. A player accumulates normal playtime while online (can be configured to only accumulate when 2+ players are online using `solo-accumulate`).
+2. When their total playtime crosses a configured cycle threshold (`minutes-per-cycle` or `hours-per-cycle`), the plugin records a processed cycle.
+3. The player gains forced PvP debt for that cycle (`forced-seconds` or `forced-minutes`).
 4. While debt is active, PvP cannot be turned off.
-5. Debt only counts down when at least 2 players are online.
+5. Debt counts down according to the `solo-forced` configuration (by default, only when at least 2 players are online).
 6. Logging out does not clear debt.
 
 ## Player Experience

@@ -95,8 +95,12 @@ Configure the playtime system in `config.yml`:
 
 ```yaml
 playtime:
-  hours-per-cycle: 1        # Hours of playtime to trigger forced PvP
-  forced-minutes: 20        # Minutes of forced PvP per cycle
+  minutes-per-cycle: 60     # Minutes of playtime to trigger forced PvP (overrides hours-per-cycle)
+  hours-per-cycle: 1        # Legacy: Hours of playtime to trigger forced PvP
+  forced-seconds: 1200      # Seconds of forced PvP per cycle (overrides forced-minutes)
+  forced-minutes: 20        # Legacy: Minutes of forced PvP per cycle
+  solo-accumulate: true     # Whether playtime should accumulate when a player is online alone
+  solo-forced: false        # Whether forced PvP debt should decrease when a player is online alone
 ```
 
 ## Configuration
@@ -108,8 +112,12 @@ The plugin configuration is located at `plugins/SSoggyPvP-Manager/config.yml`.
 | Setting | Description | Default |
 |---------|-------------|---------|
 | `default-pvp-state` | Default PvP state for new players | `false` |
-| `playtime.hours-per-cycle` | Hours between forced PvP periods | `1` |
-| `playtime.forced-minutes` | Duration of forced PvP in minutes | `20` |
+| `playtime.minutes-per-cycle`| Minutes between forced PvP periods | `60` |
+| `playtime.hours-per-cycle`| Hours between forced PvP periods (Legacy) | `1` |
+| `playtime.forced-seconds` | Duration of forced PvP in seconds | `1200` |
+| `playtime.forced-minutes` | Duration of forced PvP in minutes (Legacy) | `20` |
+| `playtime.solo-accumulate`| Accumulate playtime when player is online alone | `true` |
+| `playtime.solo-forced`    | Decrease debt when player is online alone | `false` |
 | `zone-wand-material` | Material for zone selection wand | `BLAZE_ROD` |
 | `save-interval` | Auto-save interval in minutes | `5` |
 | `debug` | Enable debug logging | `false` |

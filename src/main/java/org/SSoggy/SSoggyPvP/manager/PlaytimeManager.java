@@ -20,7 +20,9 @@ public class PlaytimeManager {
     
     // cached config values (updated on reload)
     private long cycleSeconds;
-    private int forcedMinutes;
+    private long forcedDebtSeconds;
+    private boolean soloAccumulate;
+    private boolean soloForced;
 
     public PlaytimeManager(PvPTogglePlugin plugin) {
         this.plugin = plugin;
@@ -28,16 +30,31 @@ public class PlaytimeManager {
     }
     
     public void loadConfigValues() {
-        int hoursPerCycle = plugin.getConfig().getInt("playtime.hours-per-cycle", 1);
-        
-        // validate hours-per-cycle to prevent division by zero
-        if (hoursPerCycle < 1) {
-            plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.hours-per-cycle'' ({0}); using 1 instead.", hoursPerCycle);
-            hoursPerCycle = 1;
+        // Fallback hierarchy for backwards compatibility: minutes-per-cycle -> hours-per-cycle -> 1 hour
+        int minutesPerCycle = plugin.getConfig().getInt("playtime.minutes-per-cycle", -1);
+        if (minutesPerCycle == -1) {
+            int hoursPerCycle = plugin.getConfig().getInt("playtime.hours-per-cycle", 1);
+            if (hoursPerCycle < 1) {
+                plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.hours-per-cycle'' ({0}); using 1 instead.", hoursPerCycle);
+                hoursPerCycle = 1;
+            }
+            minutesPerCycle = hoursPerCycle * 60;
+        } else if (minutesPerCycle < 1) {
+            plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.minutes-per-cycle'' ({0}); using 60 instead.", minutesPerCycle);
+            minutesPerCycle = 60;
         }
-        
-        this.cycleSeconds = hoursPerCycle * 3600L;
-        this.forcedMinutes = plugin.getConfig().getInt("playtime.forced-minutes", 20);
+        this.cycleSeconds = minutesPerCycle * 60L;
+
+        // Fallback hierarchy for forced time: forced-seconds -> forced-minutes -> 20 minutes
+        int forcedSeconds = plugin.getConfig().getInt("playtime.forced-seconds", -1);
+        if (forcedSeconds == -1) {
+            int forcedMinutes = plugin.getConfig().getInt("playtime.forced-minutes", 20);
+            forcedSeconds = forcedMinutes * 60;
+        }
+        this.forcedDebtSeconds = forcedSeconds;
+
+        this.soloAccumulate = plugin.getConfig().getBoolean("playtime.solo-accumulate", true);
+        this.soloForced = plugin.getConfig().getBoolean("playtime.solo-forced", false);
     }
 
     public void startTracking() {
@@ -82,7 +99,11 @@ public class PlaytimeManager {
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             PlayerData data = plugin.getPvPManager().getPlayerData(player.getUniqueId());
-            data.setTotalPlaytimeSeconds(data.getTotalPlaytimeSeconds() + 1);
+
+            if (soloAccumulate || onlinePlayerCount >= 2) {
+                data.setTotalPlaytimeSeconds(data.getTotalPlaytimeSeconds() + 1);
+            }
+
             checkAndApplyCycleMilestones(player, data);
             decrementPlayerDebt(player, data, onlinePlayerCount);
         }
@@ -96,18 +117,28 @@ public class PlaytimeManager {
         data.setProcessedCycles(currentCycles);
 
         if (!player.hasPermission("pvptoggle.bypass")) {
-            long additionalDebt = newCycles * forcedMinutes * 60L;
+            long additionalDebt = newCycles * forcedDebtSeconds;
+            boolean alreadyInDebt = data.getPvpDebtSeconds() > 0;
             data.setPvpDebtSeconds(data.getPvpDebtSeconds() + additionalDebt);
-            MessageUtil.send(player,
-                    "&c&l⚔ Forced PvP activated! &7Duration: &f"
-                            + MessageUtil.formatTime(data.getPvpDebtSeconds()));
+
+            if (alreadyInDebt) {
+                MessageUtil.send(player,
+                        "&c&l⚔ Forced PvP extended! &7Duration: &f"
+                                + MessageUtil.formatTime(data.getPvpDebtSeconds()));
+            } else {
+                MessageUtil.send(player,
+                        "&c&l⚔ Forced PvP activated! &7Duration: &f"
+                                + MessageUtil.formatTime(data.getPvpDebtSeconds()));
+            }
         }
     }
 
     private void decrementPlayerDebt(Player player, PlayerData data, int onlinePlayerCount) {
         if (data.getPvpDebtSeconds() <= 0 || player.hasPermission("pvptoggle.bypass")) return;
 
-        if (onlinePlayerCount >= 2) {
+        boolean isDecreasing = soloForced || onlinePlayerCount >= 2;
+
+        if (isDecreasing) {
             data.setPvpDebtSeconds(data.getPvpDebtSeconds() - 1);
         }
 
@@ -117,7 +148,7 @@ public class PlaytimeManager {
             MessageUtil.sendActionBar(player, "&a✓ Forced PvP ended");
         } else {
             // action bar shown once per second (task runs every 20 ticks / 1 second)
-            String status = (onlinePlayerCount >= 2)
+            String status = isDecreasing
                     ? "&c⚔ Forced PvP"
                     : "&e⚔ Forced PvP &7(paused — solo)";
             MessageUtil.sendActionBar(player,

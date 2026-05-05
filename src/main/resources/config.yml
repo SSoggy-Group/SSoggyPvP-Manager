@@ -19,10 +19,21 @@ messages:
 
 # Playtime settings
 playtime:
-  # How many hours of playtime trigger a forced PvP period
+  # Minutes of playtime to trigger forced PvP (overrides hours-per-cycle)
+  minutes-per-cycle: 60
+  # Legacy support: How many hours of playtime trigger a forced PvP period (used if minutes-per-cycle is not set)
   hours-per-cycle: 1
-  # How many minutes of forced PvP per cycle
+
+  # Seconds of forced PvP per cycle (overrides forced-minutes)
+  forced-seconds: 1200
+  # Legacy support: How many minutes of forced PvP per cycle (used if forced-seconds is not set)
   forced-minutes: 20
+
+  # Whether playtime should accumulate when a player is online alone
+  solo-accumulate: true
+
+  # Whether forced PvP debt should decrease when a player is online alone
+  solo-forced: false
 
 # Zone wand material (any valid Bukkit Material name)
 zone-wand-material: BLAZE_ROD
