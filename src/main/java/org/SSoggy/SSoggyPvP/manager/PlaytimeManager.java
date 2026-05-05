@@ -71,11 +71,6 @@ public class PlaytimeManager {
         if (saveTask != null) saveTask.cancel();
     }
     
-    @Deprecated(forRemoval = true, since = "1.0.0")
-    public void cleanupPlayer(UUID playerId) {
-        // no-op: throttling removed since task already runs at 1-second intervals
-    }
-
     private void updatePlayerTimesAndDebt() {
         // cache online player count once per tick instead of reading multiple times
         int onlinePlayerCount = Bukkit.getOnlinePlayers().size();
