@@ -40,8 +40,6 @@ public class PlayerListener implements Listener {
         // use async to avoid blocking the main thread during logout
         // note: if the server shuts down right after quit, this may not complete.
         // onDisable() still performs a sync save for shutdown cases.
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
-            plugin.getPvPManager().saveData();
-        });
+        plugin.getPvPManager().requestSave();
     }
 }

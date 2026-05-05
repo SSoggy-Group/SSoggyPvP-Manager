@@ -4,8 +4,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Level;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -22,6 +24,9 @@ public class PvPManager {
     
     // sync writes to the player data file
     private final Object saveLock = new Object();
+
+    // tracks if a save is currently queued
+    private final AtomicBoolean savePending = new AtomicBoolean(false);
 
     public PvPManager(PvPTogglePlugin plugin) {
         this.plugin = plugin;
@@ -94,7 +99,17 @@ public class PvPManager {
         plugin.getLogger().log(Level.INFO, "Loaded data for {0} players.", playerDataMap.size());
     }
 
+    public void requestSave() {
+        if (savePending.compareAndSet(false, true)) {
+            // delay save by 60 ticks (3 seconds) to batch multiple quits together
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+                saveData();
+            }, 60L);
+        }
+    }
+
     public void saveData() {
+        savePending.set(false);
         synchronized (saveLock) {
             YamlConfiguration config = new YamlConfiguration();
             for (Map.Entry<UUID, PlayerData> entry : playerDataMap.entrySet()) {
