@@ -39,6 +39,11 @@ public class PvPAdminCommand implements TabExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (!sender.hasPermission("pvptoggle.admin")) {
+            MessageUtil.send(sender, plugin.getConfig().getString("messages.no-permission", "&4&l✘ &cYou don't have permission to do that!"));
+            return true;
+        }
+
         if (args.length == 0) {
             sendHelp(sender);
             return true;
