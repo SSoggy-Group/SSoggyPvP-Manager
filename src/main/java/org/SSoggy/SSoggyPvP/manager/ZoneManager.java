@@ -105,7 +105,7 @@ public class ZoneManager {
             PvPZone removedZone = zones.remove(name.toLowerCase());
             removed = removedZone != null;
             if (removed) {
-                zoneList.remove(removedZone);
+                zoneList = List.copyOf(zones.values());
                 clearZoneCache(); // clear cache when zones change
             }
         }
