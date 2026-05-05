@@ -121,7 +121,7 @@ public class ZoneManager {
     }
 
     public Collection<PvPZone> getZones() {
-        return Collections.unmodifiableCollection(zoneList);
+        return zoneList;
     }
 
     public Set<String> getZoneNames() {
