@@ -9,7 +9,7 @@ import static org.mockito.Mockito.*;
 class CommandUtilTest {
 
     @Test
-    public void testRequirePlayer_WithPlayer() {
+    void testRequirePlayer_WithPlayer() {
         // Arrange
         Player mockPlayer = mock(Player.class);
         String errorMessage = "You must be a player!";
