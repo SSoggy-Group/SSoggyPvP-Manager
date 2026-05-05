@@ -176,10 +176,18 @@ public class PvPAdminCommand implements TabExecutor {
                 MessageUtil.send(sender, "&7PvP debt: &f" + MessageUtil.formatTime(data.getPvpDebtSeconds()));
             }
             case "reset" -> {
+                if (!sender.hasPermission("pvptoggle.admin")) {
+                    MessageUtil.send(sender, plugin.getConfig().getString("messages.no-permission", "&4&l✘ &cYou don't have permission to do that!"));
+                    return;
+                }
                 plugin.getPvPManager().resetPlayerData(uuid);
                 MessageUtil.send(sender, "&aAll data for '&f" + playerName + "&a' has been reset.");
             }
             case "setdebt" -> {
+                if (!sender.hasPermission("pvptoggle.admin")) {
+                    MessageUtil.send(sender, plugin.getConfig().getString("messages.no-permission", "&4&l✘ &cYou don't have permission to do that!"));
+                    return;
+                }
                 if (args.length < 4) {
                     MessageUtil.send(sender, "&cUsage: /pvpadmin player <name> setdebt <seconds>");
                     return;
