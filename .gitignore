@@ -56,5 +56,3 @@ buildNumber.properties
 # Test server
 run/
 server/
-test_benchmark_dir/
-cp.txt

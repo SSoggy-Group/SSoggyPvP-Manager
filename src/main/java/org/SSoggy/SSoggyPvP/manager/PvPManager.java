@@ -110,16 +110,19 @@ public class PvPManager {
 
     public void saveData() {
         savePending.set(false);
+
+        // build yaml tree outside lock to reduce contention
+        YamlConfiguration config = new YamlConfiguration();
+        for (Map.Entry<UUID, PlayerData> entry : playerDataMap.entrySet()) {
+            String path = "players." + entry.getKey().toString();
+            PlayerData data = entry.getValue();
+            config.set(path + ".pvp-enabled",            data.isPvpEnabled());
+            config.set(path + ".total-playtime-seconds", data.getTotalPlaytimeSeconds());
+            config.set(path + ".processed-cycles",       data.getProcessedCycles());
+            config.set(path + ".pvp-debt-seconds",       data.getPvpDebtSeconds());
+        }
+
         synchronized (saveLock) {
-            YamlConfiguration config = new YamlConfiguration();
-            for (Map.Entry<UUID, PlayerData> entry : playerDataMap.entrySet()) {
-                String path = "players." + entry.getKey().toString();
-                PlayerData data = entry.getValue();
-                config.set(path + ".pvp-enabled",            data.isPvpEnabled());
-                config.set(path + ".total-playtime-seconds", data.getTotalPlaytimeSeconds());
-                config.set(path + ".processed-cycles",       data.getProcessedCycles());
-                config.set(path + ".pvp-debt-seconds",       data.getPvpDebtSeconds());
-            }
             YamlUtil.saveConfig(config, plugin.getDataFolder(), "playerdata.yml",
                     plugin.getLogger(), "Failed to save player data");
         }

@@ -2,10 +2,10 @@ package org.SSoggy.SSoggyPvP.model;
 
 public class PlayerData {
 
-    private boolean pvpEnabled;
-    private long totalPlaytimeSeconds;
-    private int processedCycles;   // how many cycles converted to debt
-    private long pvpDebtSeconds;
+    private volatile boolean pvpEnabled;
+    private volatile long totalPlaytimeSeconds;
+    private volatile int processedCycles;   // how many cycles converted to debt
+    private volatile long pvpDebtSeconds;
 
     public PlayerData() {
         this.pvpEnabled = false;
