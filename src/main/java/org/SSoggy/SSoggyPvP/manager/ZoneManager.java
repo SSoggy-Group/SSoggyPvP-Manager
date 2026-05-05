@@ -24,7 +24,7 @@ public class ZoneManager {
 
     private final PvPTogglePlugin plugin;
     private final Map<String, PvPZone> zones = new LinkedHashMap<>();      // key = lowercase name
-    private volatile List<PvPZone> zoneList = List.of();
+    private volatile Collection<PvPZone> zoneList = List.of();
     private final Map<UUID, Location[]> selections = new HashMap<>();      // [0]=pos1, [1]=pos2
     
     // lru cache for zone lookups with automatic eviction
@@ -88,11 +88,8 @@ public class ZoneManager {
                 selection[0].getBlockX(), selection[0].getBlockY(), selection[0].getBlockZ(),
                 selection[1].getBlockX(), selection[1].getBlockY(), selection[1].getBlockZ()));
         synchronized (saveLock) {
-            PvPZone old = zones.put(name.toLowerCase(), zone);
-            if (old != null) {
-                zoneList.remove(old);
-            }
-            zoneList.add(zone);
+            zones.put(name.toLowerCase(), zone);
+            zoneList = List.copyOf(zones.values());
             clearZoneCache(); // clear cache when zones change
         }
         saveZonesAsync();
@@ -102,8 +99,7 @@ public class ZoneManager {
     public boolean deleteZone(String name) {
         boolean removed;
         synchronized (saveLock) {
-            PvPZone removedZone = zones.remove(name.toLowerCase());
-            removed = removedZone != null;
+            removed = zones.remove(name.toLowerCase()) != null;
             if (removed) {
                 zoneList = List.copyOf(zones.values());
                 clearZoneCache(); // clear cache when zones change
@@ -141,7 +137,7 @@ public class ZoneManager {
             return cached;
         }
         
-        // not in cache, check all zones (thread-safe using CopyOnWriteArrayList)
+        // not in cache, check all zones (thread-safe using volatile immutable list)
         boolean inZone = false;
         for (PvPZone zone : zoneList) {
             if (zone.contains(location)) {
