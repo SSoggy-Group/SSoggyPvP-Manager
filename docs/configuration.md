@@ -23,8 +23,12 @@ The config controls:
 default-pvp-state: false
 
 playtime:
+  minutes-per-cycle: 60
   hours-per-cycle: 1
+  forced-seconds: 1200
   forced-minutes: 20
+  solo-accumulate: true
+  solo-forced: false
 
 zone-wand-material: BLAZE_ROD
 
@@ -73,12 +77,20 @@ Useful format codes:
 
 ```yaml
 playtime:
+  minutes-per-cycle: 60
   hours-per-cycle: 1
+  forced-seconds: 1200
   forced-minutes: 20
+  solo-accumulate: true
+  solo-forced: false
 ```
 
-- `hours-per-cycle`: how much accumulated playtime triggers a forced PvP cycle
-- `forced-minutes`: how long forced PvP lasts for each processed cycle
+- `minutes-per-cycle`: how many minutes of accumulated playtime triggers a forced PvP cycle (overrides `hours-per-cycle`)
+- `hours-per-cycle`: legacy support; how many hours of playtime triggers a forced PvP cycle
+- `forced-seconds`: how many seconds forced PvP lasts for each processed cycle (overrides `forced-minutes`)
+- `forced-minutes`: legacy support; how many minutes forced PvP lasts for each processed cycle
+- `solo-accumulate`: whether playtime accumulates when a player is online alone
+- `solo-forced`: whether forced PvP debt counts down when a player is online alone
 
 See [Playtime System](playtime-system) for behavior details.
 
