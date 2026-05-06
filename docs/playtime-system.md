@@ -25,7 +25,7 @@ With the default values:
 
 ## How It Works
 
-1. A player accumulates normal playtime while online (can be configured to only accumulate when 2+ players are online using `solo-accumulate`).
+1. A player accumulates normal playtime while online. By default this happens even when alone; set `solo-accumulate: false` to require 2+ players online before playtime counts.
 2. When their total playtime crosses a configured cycle threshold (`minutes-per-cycle` or `hours-per-cycle`), the plugin records a processed cycle.
 3. The player gains forced PvP debt for that cycle (`forced-seconds` or `forced-minutes`).
 4. While debt is active, PvP cannot be turned off.

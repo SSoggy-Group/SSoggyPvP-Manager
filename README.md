@@ -82,11 +82,11 @@ The playtime debt system automatically enforces periods of mandatory PvP based o
 
 ### How It Works
 
-- Players accumulate playtime as they play on the server
-- After a configured number of hours (default: 1 hour), players enter a forced PvP period
+- Players accumulate playtime as they play on the server (by default, even when online alone; set `solo-accumulate: false` to require 2+ players)
+- After a configured number of minutes (default: 60 minutes via `minutes-per-cycle`), players enter a forced PvP period
 - During forced PvP, players cannot disable PvP
-- Forced PvP lasts for a configured duration (default: 20 minutes)
-- Debt only counts down when 2 or more players are online
+- Forced PvP lasts for a configured duration (default: 1200 seconds / 20 minutes)
+- By default, debt only counts down when 2 or more players are online; set `solo-forced: true` to also count down while alone
 - Logging out does not reduce debt
 
 ### Configuration
@@ -112,12 +112,12 @@ The plugin configuration is located at `plugins/SSoggyPvP-Manager/config.yml`.
 | Setting | Description | Default |
 |---------|-------------|---------|
 | `default-pvp-state` | Default PvP state for new players | `false` |
-| `playtime.minutes-per-cycle`| Minutes between forced PvP periods | `60` |
-| `playtime.hours-per-cycle`| Hours between forced PvP periods (Legacy) | `1` |
+| `playtime.minutes-per-cycle` | Minutes between forced PvP periods | `60` |
+| `playtime.hours-per-cycle` | Hours between forced PvP periods (Legacy) | `1` |
 | `playtime.forced-seconds` | Duration of forced PvP in seconds | `1200` |
 | `playtime.forced-minutes` | Duration of forced PvP in minutes (Legacy) | `20` |
-| `playtime.solo-accumulate`| Accumulate playtime when player is online alone | `true` |
-| `playtime.solo-forced`    | Decrease debt when player is online alone | `false` |
+| `playtime.solo-accumulate` | Accumulate playtime when player is online alone | `true` |
+| `playtime.solo-forced` | Decrease debt when player is online alone | `false` |
 | `zone-wand-material` | Material for zone selection wand | `BLAZE_ROD` |
 | `save-interval` | Auto-save interval in minutes | `5` |
 | `debug` | Enable debug logging | `false` |

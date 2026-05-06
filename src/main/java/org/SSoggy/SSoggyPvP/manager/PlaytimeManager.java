@@ -31,27 +31,36 @@ public class PlaytimeManager {
     
     public void loadConfigValues() {
         // Fallback hierarchy for backwards compatibility: minutes-per-cycle -> hours-per-cycle -> 1 hour
-        int minutesPerCycle = plugin.getConfig().getInt("playtime.minutes-per-cycle", -1);
-        if (minutesPerCycle == -1) {
+        int minutesPerCycleConfig = plugin.getConfig().getInt("playtime.minutes-per-cycle", -1);
+        if (minutesPerCycleConfig == -1) {
             int hoursPerCycle = plugin.getConfig().getInt("playtime.hours-per-cycle", 1);
             if (hoursPerCycle < 1) {
                 plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.hours-per-cycle'' ({0}); using 1 instead.", hoursPerCycle);
                 hoursPerCycle = 1;
             }
-            minutesPerCycle = hoursPerCycle * 60;
-        } else if (minutesPerCycle < 1) {
-            plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.minutes-per-cycle'' ({0}); using 60 instead.", minutesPerCycle);
-            minutesPerCycle = 60;
+            this.cycleSeconds = (long) hoursPerCycle * 60 * 60;
+        } else if (minutesPerCycleConfig < 1) {
+            plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.minutes-per-cycle'' ({0}); using 60 instead.", minutesPerCycleConfig);
+            this.cycleSeconds = 60L * 60;
+        } else {
+            this.cycleSeconds = (long) minutesPerCycleConfig * 60;
         }
-        this.cycleSeconds = minutesPerCycle * 60L;
 
         // Fallback hierarchy for forced time: forced-seconds -> forced-minutes -> 20 minutes
-        int forcedSeconds = plugin.getConfig().getInt("playtime.forced-seconds", -1);
-        if (forcedSeconds == -1) {
+        int forcedSecondsConfig = plugin.getConfig().getInt("playtime.forced-seconds", -1);
+        if (forcedSecondsConfig == -1) {
             int forcedMinutes = plugin.getConfig().getInt("playtime.forced-minutes", 20);
-            forcedSeconds = forcedMinutes * 60;
+            if (forcedMinutes < 0) {
+                plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.forced-minutes'' ({0}); using 20 instead.", forcedMinutes);
+                forcedMinutes = 20;
+            }
+            this.forcedDebtSeconds = (long) forcedMinutes * 60;
+        } else if (forcedSecondsConfig < 0) {
+            plugin.getLogger().log(Level.WARNING, "[PvPToggle] Invalid value for ''playtime.forced-seconds'' ({0}); using 1200 instead.", forcedSecondsConfig);
+            this.forcedDebtSeconds = 1200L;
+        } else {
+            this.forcedDebtSeconds = forcedSecondsConfig;
         }
-        this.forcedDebtSeconds = forcedSeconds;
 
         this.soloAccumulate = plugin.getConfig().getBoolean("playtime.solo-accumulate", true);
         this.soloForced = plugin.getConfig().getBoolean("playtime.solo-forced", false);
