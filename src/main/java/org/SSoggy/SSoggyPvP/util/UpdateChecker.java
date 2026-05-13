@@ -16,7 +16,7 @@ import org.SSoggy.SSoggyPvP.PvPTogglePlugin;
 
 public class UpdateChecker implements Listener {
 
-    private static final String GITHUB_API =
+    private String apiUrl =
             "https://api.github.com/repos/SSoggy-Group/SSoggyPvP-Manager/releases/latest";
 
     private final PvPTogglePlugin plugin;
@@ -26,11 +26,20 @@ public class UpdateChecker implements Listener {
         this.plugin = plugin;
     }
 
+    // For testing purposes
+    protected void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
+    public String getLatestVersion() {
+        return latestVersion;
+    }
+
     public void check() {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
             HttpURLConnection connection = null;
             try {
-                connection = (HttpURLConnection) URI.create(GITHUB_API).toURL().openConnection();
+                connection = (HttpURLConnection) URI.create(apiUrl).toURL().openConnection();
                 connection.setRequestMethod("GET");
                 connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
                 connection.setConnectTimeout(5000);
