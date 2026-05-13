@@ -23,7 +23,7 @@ public final class YamlUtil {
             if (file.toPath().startsWith(folder.toPath())) {
                 return file;
             }
-        } catch (IOException | RuntimeException e) {
+        } catch (IOException e) {
             return null;
         }
         return null;
