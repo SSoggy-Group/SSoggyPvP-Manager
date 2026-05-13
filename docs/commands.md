@@ -114,14 +114,6 @@ Set a player's forced PvP debt directly.
 /pvpadmin player Steve setdebt 1200
 ```
 
-### `/pvpadmin simtime <seconds>`
-
-Add simulated playtime to the executing player for testing.
-
-```bash
-/pvpadmin simtime 3600
-```
-
 ### `/pvpadmin reload`
 
 Reload `config.yml` from disk.

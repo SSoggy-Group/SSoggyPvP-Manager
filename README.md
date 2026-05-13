@@ -47,7 +47,6 @@ A comprehensive Minecraft PvP management plugin that provides players with contr
 | `/pvpadmin player <name> info` | View player PvP information | `pvptoggle.admin` |
 | `/pvpadmin player <name> reset` | Reset player's PvP data | `pvptoggle.admin` |
 | `/pvpadmin player <name> setdebt <seconds>` | Set player's forced PvP debt | `pvptoggle.admin` |
-| `/pvpadmin simtime <seconds>` | Simulate playtime for testing | `pvptoggle.admin` |
 | `/pvpadmin reload` | Reload configuration | `pvptoggle.admin` |
 
 ## Permissions

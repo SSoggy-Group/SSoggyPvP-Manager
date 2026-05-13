@@ -51,20 +51,6 @@ messages:
 
 Players with `pvptoggle.bypass` are exempt from playtime-based forced PvP.
 
-## Testing
-
-Use the built-in simulation command to avoid waiting:
-
-```bash
-/pvpadmin simtime 3600
-```
-
-Then verify the result with:
-
-```bash
-/pvp status
-```
-
 ## Admin Inspection
 
 To inspect an affected player:

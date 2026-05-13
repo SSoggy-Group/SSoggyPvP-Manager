@@ -62,13 +62,7 @@ Join the server and run:
 
 ### Step 6: Test Playtime Debt
 
-Use the admin simulation command to avoid waiting for a full cycle:
-
-```bash
-/pvpadmin simtime 3600
-```
-
-Then run `/pvp status` to confirm the player enters forced PvP when a cycle threshold is crossed.
+Run `/pvpadmin player <name> setdebt <seconds>` to give a player debt, then run `/pvp status` to confirm the player is in forced PvP.
 
 ## Next Steps
 
