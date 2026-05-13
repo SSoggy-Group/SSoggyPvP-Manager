@@ -264,7 +264,6 @@ public class PvPAdminCommand implements TabExecutor {
                     completions.addAll(Arrays.asList("info", "reset", "setdebt"));
                 }
             }
-            default -> { /* no completions */ }
         }
 
         String last = args[args.length - 1].toLowerCase();
