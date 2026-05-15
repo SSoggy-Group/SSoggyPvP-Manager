@@ -155,7 +155,20 @@ public class PvPAdminCommand implements TabExecutor {
         MessageUtil.send(sender, "&7Corner 2: &f(" + zone.getX2() + ", " + zone.getY2() + ", " + zone.getZ2() + ")");
     }
 
-    @SuppressWarnings("deprecation")
+
+    private OfflinePlayer getOfflinePlayerExact(String name) {
+        Player online = Bukkit.getPlayerExact(name);
+        if (online != null) {
+            return online;
+        }
+        for (OfflinePlayer offline : Bukkit.getOfflinePlayers()) {
+            if (offline.getName() != null && offline.getName().equalsIgnoreCase(name)) {
+                return offline;
+            }
+        }
+        return null;
+    }
+
     private void handlePlayer(CommandSender sender, String[] args) {
         if (args.length < 3) {
             MessageUtil.send(sender, "&cUsage: /pvpadmin player <name> <info|reset|setdebt>");
@@ -163,8 +176,8 @@ public class PvPAdminCommand implements TabExecutor {
         }
 
         String playerName = args[1];
-        OfflinePlayer target = Bukkit.getOfflinePlayer(playerName);
-        if (!target.hasPlayedBefore() && !target.isOnline()) {
+        OfflinePlayer target = getOfflinePlayerExact(playerName);
+        if (target == null) {
             MessageUtil.send(sender, "&cPlayer '&f" + playerName + "&c' has never joined this server.");
             return;
         }
