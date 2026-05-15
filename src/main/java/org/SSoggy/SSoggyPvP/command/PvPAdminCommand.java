@@ -177,7 +177,7 @@ public class PvPAdminCommand implements TabExecutor {
 
         String playerName = args[1];
         OfflinePlayer target = getOfflinePlayerExact(playerName);
-        if (target == null || (!target.hasPlayedBefore() && !target.isOnline())) {
+        if (target == null) {
             MessageUtil.send(sender, "&cPlayer '&f" + playerName + "&c' has never joined this server.");
             return;
         }
